@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/projet/projet.css">
+    <title>Test d'intrusion & Pare-feu</title>
+</head>
+<body>
+    <main class="page">
+        <article class="content">
+            <h1>Protection d'une infrastructure avec pare-feu et IPS</h1>
+            <p>
+                Ce projet consistait à déployer et configurer une solution de filtrage réseau
+                couplée à un système de prévention d'intrusion (IPS) Suricata, afin de protéger
+                l'infrastructure d'une organisation composée de plusieurs sous-réseaux segmentés.
+            </p>
+
+            <h2>Architecture de l'infrastructure</h2>
+            <p>L'infrastructure simulée via des machines virtuelles Linux (Debian) sous Proxmox comprend :</p>
+            <ul>
+                <li><strong>DMZ publique</strong> (66.6.6.4/30) : héberge les services accessibles depuis Internet (DNS, HTTP)</li>
+                <li><strong>DMZ privée</strong> (10.0.1.0/24 / 2001:1::/64) : accessible en partie depuis l'extérieur et le réseau interne</li>
+                <li><strong>Intranet</strong> (10.0.0.0/24 / 2001::/64) : réseau interne non visible de l'extérieur</li>
+                <li><strong>Pare-feu central</strong> : relié aux quatre zones via eth0 (66.6.6.1), eth1 (66.6.6.5), eth2 (10.0.0.1) et eth3 (10.0.1.1)</li>
+            </ul>
+
+            <h2>Configuration du pare-feu nftables</h2>
+            <p>
+                J'ai configuré le pare-feu avec nftables en appliquant une politique de filtrage
+                stateful stricte :
+            </p>
+            <ul>
+                <li>Autorisation des flux légitimes : ICMP, HTTP, DNS (UDP), SSH selon les zones</li>
+                <li>Rejet de tout paquet non explicitement autorisé (politique DROP par défaut)</li>
+                <li>Protection contre l'IP spoofing et les paquets invalides</li>
+                <li>NAT en sortie depuis le réseau interne vers la DMZ publique (via eth1)</li>
+                <li>NAT en sortie depuis la DMZ privée vers l'extérieur (via eth0)</li>
+                <li>Gestion du trafic loopback sans état sur l'interface lo</li>
+            </ul>
+
+            <h2>Déploiement de l'IPS Suricata</h2>
+            <p>
+                Suricata a été configuré en mode IPS, couplé à netfilter, pour bloquer
+                automatiquement les flux malveillants détectés. Trois scénarios d'intrusion
+                ont été couverts :
+            </p>
+            <ul>
+                <li><strong>Requête DNS malveillante</strong> : détection et blocage de toute résolution du domaine <code>malicious.com</code></li>
+                <li><strong>Ping flood</strong> : détection d'un flood ICMP à l'aide de hping3, avec seuil de déclenchement configurable</li>
+                <li><strong>Brute-force SSH</strong> : blocage automatique au-delà d'un certain nombre de tentatives de connexion SSH par seconde</li>
+            </ul>
+
+            <h2>Tests de validation</h2>
+            <ul>
+                <li>Tests de connectivité entre toutes les zones pour vérifier les règles de filtrage</li>
+                <li>Simulation d'attaques (ping flood avec hping3, tentatives SSH répétées) pour valider les règles Suricata</li>
+                <li>Vérification des logs Suricata et des compteurs nftables pour confirmer le bon fonctionnement</li>
+            </ul>
+
+            <p>
+                Ce projet m'a permis d'acquérir une expérience solide en sécurité réseau :
+                segmentation par zones, filtrage stateful avec nftables, et prévention
+                d'intrusion avec Suricata dans un environnement virtualisé réaliste.
+            </p>
+        </article>
+    </main>
+</body>
+</html>

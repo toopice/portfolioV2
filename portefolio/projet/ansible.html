@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/projet/projet.css">
+    <title>Automatisation Ansible</title>
+</head>
+<body>
+    <main class="page">
+        <article class="content">
+            <h1>Automatisation avec Ansible</h1>
+            <p>
+                Dans le cadre de ce projet, j'ai utilisé Ansible pour automatiser le déploiement
+                de la configuration NTP (Network Time Protocol) sur l'ensemble des machines
+                d'un parc serveur. L'objectif était de garantir une synchronisation temporelle
+                homogène et fiable sur toute l'infrastructure.
+            </p>
+
+            <h2>Création du rôle Ansible</h2>
+            <p>
+                J'ai conçu un rôle Ansible structuré, respectant les bonnes pratiques de
+                l'écosystème Ansible, comprenant :
+            </p>
+            <ul>
+                <li>Un dossier <code>tasks/</code> contenant les tâches d'installation et de configuration du service NTP</li>
+                <li>Un dossier <code>templates/</code> avec le fichier de configuration NTP généré dynamiquement via Jinja2</li>
+                <li>Un dossier <code>handlers/</code> pour redémarrer le service NTP après chaque modification</li>
+                <li>Un dossier <code>defaults/</code> définissant les variables par défaut (serveurs NTP, fuseau horaire...)</li>
+            </ul>
+
+            <h2>Création du playbook</h2>
+            <p>
+                Un playbook principal a été rédigé pour orchestrer le déploiement du rôle sur
+                l'ensemble des machines de l'inventaire. Il inclut :
+            </p>
+            <ul>
+                <li>La sélection des hôtes cibles via l'inventaire Ansible</li>
+                <li>L'appel du rôle NTP avec les variables adaptées à l'environnement</li>
+                <li>La gestion des droits d'exécution en mode privilégié (<code>become: true</code>)</li>
+            </ul>
+
+            <h2>Résultat</h2>
+            <p>
+                Grâce à ce playbook, la configuration NTP a pu être déployée de manière
+                cohérente et reproductible sur l'ensemble du parc en quelques secondes.
+                Ce projet m'a permis de maîtriser la création de rôles Ansible, la gestion
+                des inventaires et l'automatisation des tâches d'administration système.
+            </p>
+        </article>
+    </main>
+</body>
+</html>

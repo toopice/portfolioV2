@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/projet/projet.css">
+    <title>Supervision Centreon</title>
+</head>
+<body>
+    <main class="page">
+        <article class="content">
+            <h1>Supervision avec Centreon</h1>
+            <p>
+                Dans le cadre de ce projet, j'ai mis en place une solution de supervision réseau
+                basée sur Centreon. L'objectif était de centraliser la surveillance de l'état des
+                serveurs et des services de l'infrastructure afin d'anticiper les pannes et
+                d'assurer la continuité de service.
+            </p>
+
+            <h2>Création d'indicateurs de supervision</h2>
+            <p>
+                J'ai créé des indicateurs personnalisés (checks) pour surveiller en temps réel
+                des métriques clés sur chaque machine :
+            </p>
+            <ul>
+                <li>Utilisation CPU et RAM</li>
+                <li>Espace disque disponible</li>
+                <li>État des services critiques (SSH, HTTP, DNS...)</li>
+                <li>Latence réseau via des sondes ICMP</li>
+                <li>Disponibilité des interfaces réseau</li>
+            </ul>
+
+            <h2>Rattachement des serveurs au serveur Centreon</h2>
+            <p>
+                J'ai intégré plusieurs serveurs à l'infrastructure de supervision en les
+                enregistrant dans Centreon via le protocole SNMP et l'agent Centreon Engine.
+                Chaque hôte a été configuré avec :
+            </p>
+            <ul>
+                <li>Définition des hôtes et groupes d'hôtes dans Centreon</li>
+                <li>Association des modèles de supervision adaptés</li>
+                <li>Configuration des seuils d'alerte (WARNING / CRITICAL)</li>
+                <li>Mise en place de notifications par e-mail en cas d'incident</li>
+            </ul>
+
+            <h2>Résultat</h2>
+            <p>
+                Ce projet m'a permis d'acquérir une expérience concrète en supervision
+                d'infrastructure, en administration de Centreon et en gestion des alertes.
+                L'ensemble des serveurs surveillés est désormais visible depuis un tableau de
+                bord centralisé, permettant une réactivité immédiate en cas d'incident.
+            </p>
+        </article>
+    </main>
+</body>
+</html>
