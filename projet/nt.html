@@ -65,26 +65,39 @@
         }
 
         function exploserFleurs() {
-            const fleurs = ['🌸','🌺','🌼','🌻','💐','🌹','🌷','✿','🌸','💮'];
+            const fleurs = ['🌸','🌺','🌼','🌻','💐','🌹','🌷','✿','💮'];
             const total = 120;
             for (let i = 0; i < total; i++) {
                 setTimeout(() => {
                     const el = document.createElement('div');
                     el.textContent = fleurs[Math.floor(Math.random() * fleurs.length)];
-                    el.style.cssText = `
-                        position: fixed;
-                        left: ${Math.random() * 100}vw;
-                        top: ${50 + (Math.random() - 0.5) * 20}vh;
-                        font-size: ${20 + Math.random() * 40}px;
-                        pointer-events: none;
-                        z-index: 9999;
-                        animation: explode ${0.8 + Math.random() * 1.4}s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
-                        --tx: ${(Math.random() - 0.5) * 300}px;
-                        --ty: ${-100 - Math.random() * 500}px;
-                        --rot: ${(Math.random() - 0.5) * 720}deg;
-                    `;
+                    const startX = Math.random() * window.innerWidth;
+                    const startY = window.innerHeight * (0.4 + Math.random() * 0.2);
+                    const tx = (Math.random() - 0.5) * 400;
+                    const ty = -120 - Math.random() * 600;
+                    const rot = (Math.random() - 0.5) * 720;
+                    const duration = 900 + Math.random() * 1400;
+                    const size = 20 + Math.random() * 40;
+
+                    el.style.position = 'fixed';
+                    el.style.left = startX + 'px';
+                    el.style.top = startY + 'px';
+                    el.style.fontSize = size + 'px';
+                    el.style.pointerEvents = 'none';
+                    el.style.zIndex = '9999';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translate(0,0) rotate(0deg) scale(0.5)';
+                    el.style.transition = `transform ${duration}ms cubic-bezier(0.25,0.46,0.45,0.94), opacity ${duration}ms ease`;
                     document.body.appendChild(el);
-                    setTimeout(() => el.remove(), 2500);
+
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            el.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg) scale(1.2)`;
+                            el.style.opacity = '0';
+                        });
+                    });
+
+                    setTimeout(() => el.remove(), duration + 100);
                 }, i * 15);
             }
         }
