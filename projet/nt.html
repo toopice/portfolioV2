@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/projet/nt.css">
+    <title>Une question importante ♥</title>
+</head>
+<body>
+
+    <div class="petals" id="petals"></div>
+
+    <div class="card">
+        <span class="heart-top">♥</span>
+        <h1>Veux-tu te mettre<br>en couple avec moi ?</h1>
+
+        <div class="choices">
+            <label class="choice-label">
+                <input type="radio" name="reponse" value="oui" onchange="repondre('oui')">
+                <span class="btn-oui">Oui ♥</span>
+            </label>
+
+            <label class="choice-label">
+                <input type="radio" name="reponse" value="non" onchange="repondre('non')">
+                <span class="btn-non">Non</span>
+            </label>
+        </div>
+
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        // Pétales qui tombent
+        const petals = document.getElementById('petals');
+        const emojis = ['♥', '🌸', '✿', '♡'];
+        for (let i = 0; i < 18; i++) {
+            const p = document.createElement('div');
+            p.className = 'petal';
+            p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (4 + Math.random() * 6) + 's';
+            p.style.animationDelay = (Math.random() * 8) + 's';
+            p.style.fontSize = (14 + Math.random() * 16) + 'px';
+            petals.appendChild(p);
+        }
+
+        function repondre(rep) {
+            const msg = document.getElementById('message');
+            if (rep === 'oui') {
+                msg.textContent = '🎉 Je savais que tu dirais oui ! ♥';
+            } else {
+                msg.textContent = '…tu es sûre ? 🥺';
+            }
+            msg.classList.add('visible');
+        }
+    </script>
+
+</body>
+</html>
