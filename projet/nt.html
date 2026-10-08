@@ -14,16 +14,9 @@
         <span class="heart-top">♥</span>
         <h1>Veux-tu te mettre<br>en couple avec moi ?</h1>
 
-        <div class="choices">
-            <label class="choice-label">
-                <input type="radio" name="reponse" value="oui" onchange="repondre('oui')">
-                <span class="btn-oui">Oui ♥</span>
-            </label>
-
-            <label class="choice-label">
-                <input type="radio" name="reponse" value="non" onchange="repondre('non')">
-                <span class="btn-non">Non</span>
-            </label>
+        <div class="choices" id="choices">
+            <button class="btn-oui" id="btn-oui" onclick="repondre('oui')">Oui ♥</button>
+            <button class="btn-non" id="btn-non" onclick="swapNon()">Non</button>
         </div>
 
         <p class="message" id="message"></p>
@@ -44,14 +37,29 @@
             petals.appendChild(p);
         }
 
+        function swapNon() {
+            const btnOui = document.getElementById('btn-oui');
+            const btnNon = document.getElementById('btn-non');
+            // L'ancien "oui" devient "non", l'ancien "non" devient "oui"
+            btnOui.className = 'btn-non';
+            btnOui.id = 'btn-non-tmp';
+            btnOui.textContent = 'Non';
+            btnOui.onclick = swapNon;
+
+            btnNon.className = 'btn-oui';
+            btnNon.id = 'btn-oui';
+            btnNon.textContent = 'Oui ♥';
+            btnNon.onclick = function() { repondre('oui'); };
+
+            btnOui.id = 'btn-non';
+        }
+
         function repondre(rep) {
             const msg = document.getElementById('message');
-            if (rep === 'oui') {
-                msg.textContent = '🎉 Je savais que tu dirais oui ! ♥';
-            } else {
-                msg.textContent = '…tu es sûre ? 🥺';
-            }
+            msg.textContent = '🎉 Je savais que tu dirais oui ! ♥';
             msg.classList.add('visible');
+            document.getElementById('btn-oui').disabled = true;
+            document.getElementById('btn-non').disabled = true;
         }
     </script>
 
