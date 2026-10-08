@@ -179,3 +179,9 @@ h1 {
     0%   { transform: translateY(-30px) rotate(0deg); opacity: 0.7; }
     100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
+
+@keyframes explode {
+    0%   { transform: translate(0, 0) rotate(0deg) scale(0.5); opacity: 1; }
+    60%  { opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1.2); opacity: 0; }
+}

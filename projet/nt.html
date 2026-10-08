@@ -60,6 +60,32 @@
             msg.classList.add('visible');
             document.getElementById('btn-oui').disabled = true;
             document.getElementById('btn-non').disabled = true;
+            exploserFleurs();
+        }
+
+        function exploserFleurs() {
+            const fleurs = ['🌸','🌺','🌼','🌻','💐','🌹','🌷','✿','🌸','💮'];
+            const total = 120;
+            for (let i = 0; i < total; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.textContent = fleurs[Math.floor(Math.random() * fleurs.length)];
+                    el.style.cssText = `
+                        position: fixed;
+                        left: ${Math.random() * 100}vw;
+                        top: ${50 + (Math.random() - 0.5) * 20}vh;
+                        font-size: ${20 + Math.random() * 40}px;
+                        pointer-events: none;
+                        z-index: 9999;
+                        animation: explode ${0.8 + Math.random() * 1.4}s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+                        --tx: ${(Math.random() - 0.5) * 300}px;
+                        --ty: ${-100 - Math.random() * 500}px;
+                        --rot: ${(Math.random() - 0.5) * 720}deg;
+                    `;
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 2500);
+                }, i * 15);
+            }
         }
     </script>
 
