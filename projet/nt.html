@@ -38,6 +38,9 @@
         }
 
         function swapNon() {
+            const msg = document.getElementById('message');
+            msg.textContent = '';
+            msg.classList.remove('visible');
             const btnOui = document.getElementById('btn-oui');
             const btnNon = document.getElementById('btn-non');
             // L'ancien "oui" devient "non", l'ancien "non" devient "oui"
